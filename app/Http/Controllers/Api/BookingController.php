@@ -21,9 +21,12 @@ class BookingController extends Controller
         $validator = Validator::make($request->all(), [
             'user_id' => 'required|exists:users,id',
             'venue_id' => 'required|exists:venues,id',
-            'date' => 'required|date|after_or_equal:today',
+            'date' => 'required|date|after_or_equal:today|before_or_equal:' . now()->addMonth()->format('Y-m-d'),
             'start_time' => 'required|date_format:H:i',
             'end_time' => 'required|date_format:H:i|after:start_time',
+        ],[
+            'date.before_or_equal' => 'You can only book slots within the next 30 days.',
+            'date.after_or_equal' => 'The booking date must be today or a future date.',
         ]);
 
         if ($validator->fails()) {
