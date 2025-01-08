@@ -17,7 +17,7 @@ class DatabaseSeeder extends Seeder
     {
         User::factory(10)->create();
         Venue::factory(20)->create();
-        Booking::factory(20)->create();
+        Booking::factory(150)->create();
 
     }
 }

@@ -18,4 +18,9 @@ class Venue extends Model
     {
         return with(new static)->getTable();
     }
+
+    public function bookings()
+    {
+       return $this->hasMany(Booking::class);
+    }
 }
