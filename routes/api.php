@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 
-Route::group(['as' => 'api.'], function() {
+Route::name('api.')->group(function() {
     Route::post('/venues', [VenueController::class, 'venueList'])->name('venues');
     Route::post('/venue/performance', [VenueController::class, 'venuePerformance'])->name('ranked.venues');
     Route::post('/booking/venue', [BookingController::class, 'bookingVenue'])->name('book.venue');
