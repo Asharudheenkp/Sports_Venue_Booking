@@ -16,7 +16,7 @@ class VenueController extends Controller
      */
     public function venueList()
     {
-        $venues = Venue::withCount(Booking::getTableName())->get()->sortByDesc('bookings_count');
+        $venues = Venue::withCount(Booking::getTableName())->orderByDesc('bookings_count')->get();
         $highest = $venues->first();
         $lowest = $venues->last();
         return response()->json(['status' => true, 'venues' => $venues, 'highest' => $highest, 'lowest' => $lowest]);
@@ -49,7 +49,7 @@ class VenueController extends Controller
             }
         });
 
-        return response()->json(['status' => true, $rankedVenues]);
+        return response()->json(['status' => true, 'rankedVenues' => $rankedVenues]);
 
     }
 }
