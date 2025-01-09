@@ -6,9 +6,11 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 
-Route::post('/venues', [VenueController::class, 'venueList']);
-Route::post('/venue/performance', [VenueController::class, 'venuePerformance']);
-Route::post('/booking/venue', [BookingController::class, 'bookingVenue']);
+Route::group(['as' => 'api.'], function() {
+    Route::post('/venues', [VenueController::class, 'venueList'])->name('venues');
+    Route::post('/venue/performance', [VenueController::class, 'venuePerformance'])->name('ranked.venues');
+    Route::post('/booking/venue', [BookingController::class, 'bookingVenue'])->name('book.venue');
+});
 
 
 Route::get('/user', function (Request $request) {

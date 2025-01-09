@@ -30,7 +30,7 @@ class BookingController extends Controller
         ]);
 
         if ($validator->fails()) {
-            return response()->json([ 'status' => false, 'message' => 'Validation failed', 'errors' => $validator->errors(), ]);
+            return response()->json([ 'status' => false, 'message' => 'Validation failed', 'errors' => $validator->errors()], 422);
         }
 
         $venue = Venue::find($request->venue_id);
