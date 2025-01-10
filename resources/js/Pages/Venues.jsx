@@ -5,6 +5,8 @@ import { Head, Link } from "@inertiajs/react";
 import React, { useState, useEffect } from "react";
 export default function Venues() {
     const [venues, setVenues] = useState([]);
+    const [maxBooking, SetMaxBooking] = useState(0);
+    const [minBooking, SetMinBooking] = useState(0);
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
@@ -13,6 +15,8 @@ export default function Venues() {
                 .post(route("api.venues"))
                 .then((response) => {
                     setVenues(response.data.venues);
+                    SetMaxBooking(response.data.highest.bookings_count);
+                    SetMinBooking(response.data.lowest.bookings_count);
                     setLoading(false);
                 })
                 .catch((error) =>
@@ -48,10 +52,18 @@ export default function Venues() {
                         ) : (
                             venues.map((venue) => (
                                 <div
-                                    className="bg-white shadow-md rounded-lg p-6 mb-3 flex justify-between items-center hover:bg-gray-50 transition-all duration-300 ease-in-out"
+                                    className={`bg-white shadow-lg rounded-lg p-6 mb-4 flex justify-between items-center hover:bg-gray-100 transition-all duration-300 ease-in-out ${
+                                        venue.bookings_count === maxBooking
+                                            ? "bg-green-50 border-l-8 border-green-500 transform scale-105"
+                                            : ""
+                                    } ${
+                                        venue.bookings_count === minBooking
+                                            ? "bg-red-50 border-l-8 border-red-500 transform scale-95"
+                                            : ""
+                                    }`}
                                     key={venue.id}
                                 >
-                                    <div>
+                                    <div className="flex flex-col">
                                         <p className="text-2xl font-semibold text-gray-800">
                                             {venue.name}
                                         </p>
@@ -59,13 +71,30 @@ export default function Venues() {
                                             Bookings: {venue.bookings_count}
                                         </p>
                                     </div>
-                                    <Link
-                                        href={route("booking.page", venue.id)}
-                                    >
-                                        <PrimaryButton className="text-white hover:bg-white hover:text-black hover:border-black transition duration-300 px-6 py-2">
-                                            Book
-                                        </PrimaryButton>
-                                    </Link>
+                                    <div className="flex items-center space-x-2">
+                                        {venue.bookings_count ===
+                                            maxBooking && (
+                                            <span className="text-green-500 text-lg font-bold">
+                                                Highest Booking
+                                            </span>
+                                        )}
+                                        {venue.bookings_count ===
+                                            minBooking && (
+                                            <span className="text-red-500 text-lg font-bold">
+                                                Lowest Booking
+                                            </span>
+                                        )}
+                                        <Link
+                                            href={route(
+                                                "booking.page",
+                                                venue.id
+                                            )}
+                                        >
+                                            <PrimaryButton className="text-white hover:bg-white hover:text-black hover:border-black transition duration-300 px-6 py-2">
+                                                Book
+                                            </PrimaryButton>
+                                        </Link>
+                                    </div>
                                 </div>
                             ))
                         )}
