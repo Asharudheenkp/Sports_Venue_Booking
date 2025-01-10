@@ -30,7 +30,8 @@ export default function BookVenue({ venue, auth, timeIntervals }) {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        axios
+        axios.get('/sanctum/csrf-cookie').then(() => {
+            axios
             .post(route("api.book.venue"), formData)
             .then(({ data }) => {
                 const { status, message } = data;
@@ -50,6 +51,8 @@ export default function BookVenue({ venue, auth, timeIntervals }) {
                     setErrors(formattedErrors);
                 }
             });
+        });
+
     };
 
     return (

@@ -7,13 +7,16 @@ export default function RankedVenue() {
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
-        axios
+        axios.get('/sanctum/csrf-cookie').then(() => {
+            axios
             .post(route("api.ranked.venues"))
             .then((response) => {
                 setVenues(response.data.rankedVenues);
                 setLoading(false);
             })
             .catch((error) => console.error("Error fetching venues:", error));
+        });
+
     }, []);
 
     if (loading) {

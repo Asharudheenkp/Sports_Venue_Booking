@@ -7,13 +7,15 @@ export default function Venues() {
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
-        axios
+        axios.get('/sanctum/csrf-cookie').then(() => {
+            axios
             .post(route("api.venues"))
             .then((response) => {
                 setVenues(response.data.venues);
                 setLoading(false);
             })
             .catch((error) => console.error("Error fetching venues:", error));
+        });
     }, []);
 
     if (loading) {
