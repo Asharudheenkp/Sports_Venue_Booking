@@ -97,6 +97,12 @@ export default function RankedVenue() {
 
                         {loading ? (
                             <SkeletonLoaderForVenue />
+                        ) : venues.length === 0 ? (
+                            <div className="flex flex-col items-center justify-center p-6 bg-gray-50 rounded-md shadow-md">
+                                <p className="text-lg font-semibold text-gray-600 mb-2">
+                                    No venues found
+                                </p>
+                            </div>
                         ) : (
                             venues.map((venue) => (
                                 <div

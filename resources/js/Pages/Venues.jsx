@@ -39,6 +39,12 @@ export default function Venues() {
                         </h1>
                         {loading ? (
                             <SkeletonLoaderForVenue />
+                        ) : venues.length === 0 ? (
+                            <div className="flex flex-col items-center justify-center p-6 bg-gray-50 rounded-md shadow-md">
+                                <p className="text-lg font-semibold text-gray-600 mb-2">
+                                    No venues found
+                                </p>
+                            </div>
                         ) : (
                             venues.map((venue) => (
                                 <div
@@ -50,7 +56,7 @@ export default function Venues() {
                                             {venue.name}
                                         </p>
                                         <p className="text-sm font-mono text-gray-500">
-                                            Bookings:{venue.bookings_count}
+                                            Bookings: {venue.bookings_count}
                                         </p>
                                     </div>
                                     <Link
