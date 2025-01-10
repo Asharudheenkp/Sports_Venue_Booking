@@ -15,8 +15,8 @@ export default function Venues() {
                 .post(route("api.venues"))
                 .then((response) => {
                     setVenues(response.data.venues);
-                    SetMaxBooking(response.data.highest.bookings_count);
-                    SetMinBooking(response.data.lowest.bookings_count);
+                    SetMaxBooking(response.data.highest?.bookings_count);
+                    SetMinBooking(response.data.lowest?.bookings_count);
                     setLoading(false);
                 })
                 .catch((error) =>
