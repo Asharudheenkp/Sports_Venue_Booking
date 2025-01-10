@@ -10,6 +10,12 @@ use Illuminate\Support\Facades\Validator;
 
 class LoginController extends Controller
 {
+    /**
+     * Handles user login and generating an authentication token if successful.
+     *
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function login(Request $request)
     {
         $validator = Validator::make($request->all(), [
@@ -43,6 +49,12 @@ class LoginController extends Controller
         return response()->json(['status' => false, 'message' => 'Incorrect user details', 'errors' => $validator->errors()->first()]);
     }
 
+    /**
+     * Logs out the authenticated user by deleting their tokens.
+     *
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function logout(Request $request)
     {
         $userId = auth()->guard('user')->id();
